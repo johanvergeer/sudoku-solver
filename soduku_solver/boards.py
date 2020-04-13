@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABCMeta
 from dataclasses import dataclass
 from math import sqrt
-from typing import List
+from typing import List, Optional
 
 from typing_extensions import Protocol
 
@@ -72,13 +72,14 @@ class SimpleBoard(Board):
 
         return combination
 
-    def get_next_unresolved(self) -> Position:
+    def get_next_unresolved(self) -> Optional[Position]:
         size = len(self._board)
         for row in range(size):
             for column in range(size):
                 position = Position(column, row)
                 if self.get(position) == 0:
                     return position
+        return None
 
     @property
     def size(self) -> int:

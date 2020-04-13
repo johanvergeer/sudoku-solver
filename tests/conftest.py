@@ -1,10 +1,23 @@
+from typing import List
+
 import pytest
 
-from soduku_solver.solver import Board
+from soduku_solver.boards import SimpleBoard
+from soduku_solver.solver import SimpleSudokuSolver
 
 
 @pytest.fixture
-def board_4x4_1() -> Board:
+def simple_solver():
+    return SimpleSudokuSolver()
+
+
+@pytest.fixture
+def simple_board__4x4(board_4x4_1):
+    return SimpleBoard(board_4x4_1)
+
+
+@pytest.fixture
+def board_4x4_1() -> List[List[int]]:
     return [
         [3, 4, 1, 0],
         [0, 2, 0, 0],
@@ -14,7 +27,7 @@ def board_4x4_1() -> Board:
 
 
 @pytest.fixture
-def board_4x4_1_solved() -> Board:
+def board_4x4_1_solved() -> List[List[int]]:
     return [
         [3, 4, 1, 2],
         [1, 2, 3, 4],
@@ -24,7 +37,7 @@ def board_4x4_1_solved() -> Board:
 
 
 @pytest.fixture
-def board_9x9_1() -> Board:
+def board_9x9_1() -> List[List[int]]:
     return [
         [6, 0, 5, 7, 2, 0, 0, 3, 9],
         [4, 0, 0, 0, 0, 5, 1, 0, 0],

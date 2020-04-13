@@ -3,11 +3,6 @@ import pytest
 from soduku_solver.boards import SimpleBoard, Position
 
 
-@pytest.fixture
-def simple_board__4x4(board_4x4_1):
-    return SimpleBoard(board_4x4_1)
-
-
 def test_simple_board__init(simple_board__4x4, board_4x4_1):
     assert simple_board__4x4._board == board_4x4_1
 
@@ -52,6 +47,11 @@ def test_simple_board__get_next_unresolved_2(simple_board__4x4):
     simple_board__4x4.set(Position(3, 0), 2)
     simple_board__4x4.set(Position(0, 1), 1)
     assert simple_board__4x4.get_next_unresolved() == Position(2, 1)
+
+
+def test_simple_board__get_next_unresolved__already_solved(board_4x4_1_solved):
+    board = SimpleBoard(board_4x4_1_solved)
+    assert board.get_next_unresolved() is None
 
 
 def test_simple_board__unset(simple_board__4x4):
