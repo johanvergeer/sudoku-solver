@@ -1,6 +1,6 @@
 import pytest
 
-from soduku_solver.boards import SimpleBoard, Position
+from soduku_solver.boards import Position, SimpleBoard
 
 
 def test_simple_board__init(simple_board__4x4, board_4x4_1):
@@ -33,7 +33,7 @@ def test_simple_board__get_position_column(simple_board__4x4):
         (2, 2, [2, 0, 4, 3]),
         (2, 0, [1, 0, 0, 0]),
         (1, 2, [0, 0, 0, 1]),
-    ]
+    ],
 )
 def test_simple_board__get_position_sub_grid(simple_board__4x4, col, row, expected):
     assert simple_board__4x4.get_position_sub_grid(Position(col, row)) == expected
@@ -63,3 +63,9 @@ def test_simple_board__unset(simple_board__4x4):
 
 def test_simple_board__size(simple_board__4x4):
     assert simple_board__4x4.size == 4
+
+
+def test_get_available_numbers(board_9x9_1):
+    board = SimpleBoard(board_9x9_1)
+
+    assert board.get_available_numbers(Position(1, 1)) == {3, 7, 8}

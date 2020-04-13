@@ -1,7 +1,7 @@
-from abc import abstractmethod, ABCMeta
+from abc import abstractmethod
 from dataclasses import dataclass
 from math import sqrt
-from typing import List, Optional
+from typing import List, Optional, Set
 
 from typing_extensions import Protocol
 
@@ -12,6 +12,7 @@ Combination = List[int]
 @dataclass
 class Position:
     """The column and row pos on the Sudoku board"""
+
     column: int
     row: int
 
@@ -38,9 +39,12 @@ class Board(Protocol):
     def size(self) -> int:
         ...
 
+    @abstractmethod
+    def get_available_numbers(self, position: Position) -> Set[int]:
+        ...
+
 
 class SimpleBoard(Board):
-
     def __init__(self, board: List[List[int]]):
         self._board = board
 
@@ -60,7 +64,7 @@ class SimpleBoard(Board):
         return [row[position.column] for row in self._board]
 
     def get_position_sub_grid(self, position: Position) -> Combination:
-        size = int(sqrt(len(self._board)))  # Sub grid width
+        size = int(sqrt(self.size))  # Sub grid width
         box_x = position.column // size
         box_y = position.row // size
 
@@ -84,3 +88,13 @@ class SimpleBoard(Board):
     @property
     def size(self) -> int:
         return len(self._board)
+
+    def get_available_numbers(self, position: Position) -> Set[int]:
+        full_set = set(range(1, self.size + 1))
+        in_use = set(
+            self.get_position_row(position)
+            + self.get_position_column(position)
+            + self.get_position_sub_grid(position)
+        )
+
+        return full_set.difference(in_use)
