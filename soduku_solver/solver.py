@@ -1,68 +1,19 @@
-from typing import List, Tuple, Optional
-
-Board = List[List[int]]
-Position = Tuple[int, int]
-
-board: Board = [
-    [6, 0, 5, 7, 2, 0, 0, 3, 9],
-    [4, 0, 0, 0, 0, 5, 1, 0, 0],
-    [0, 2, 0, 1, 0, 0, 0, 0, 4],
-    [0, 9, 0, 0, 3, 0, 7, 0, 6],
-    [1, 0, 0, 8, 0, 9, 0, 0, 5],
-    [2, 0, 4, 0, 5, 0, 0, 8, 0],
-    [8, 0, 0, 0, 0, 3, 0, 2, 0],
-    [0, 0, 2, 9, 0, 0, 0, 0, 1],
-    [3, 5, 0, 0, 6, 7, 4, 0, 8],
-]
+from soduku_solver.boards import Board
 
 
-def find_next_empty(board: Board) -> Optional[Position]:
-    for row in range(len(board)):
-        for column in range(len(board[0])):
-            if board[row][column] == 0:
-                return row, column
-
-    return None
-
-
-def valid(bo: Board, num, pos):
-    # Check row
-    for i in range(len(bo[0])):
-        if bo[pos[0]][i] == num and pos[1] != i:
-            return False
-
-    # Check column
-    for i in range(len(bo)):
-        if bo[i][pos[1]] == num and pos[0] != i:
-            return False
-
-    # Check box
-    box_x = pos[1] // 3
-    box_y = pos[0] // 3
-
-    for i in range(box_y * 3, box_y * 3 + 3):
-        for j in range(box_x * 3, box_x * 3 + 3):
-            if bo[i][j] == num and (i, j) != pos:
-                return False
-
-    return True
-
-
-def solve(bo: Board):
-    find = find_next_empty(bo)
-    if not find:
+def solve(board: Board) -> bool:
+    pos = board.get_next_unresolved()
+    if not pos:
+        # Last field is resolved
         return True
-    else:
-        row, col = find
 
-    for i in range(1, 10):
-        if valid(board, i, (row, col)):
-            bo[row][col] = i
+    for num in board.get_available_numbers(pos):
+        board.set(pos, num)
 
-            if solve(bo):
-                return True
+        if solve(board):
+            return True
 
-            bo[row][col] = 0
+        board.unset(pos)
 
     return False
 
@@ -80,12 +31,3 @@ def print_board(bo: Board):
                 print(bo[i][j])
             else:
                 print(str(bo[i][j]) + " ", end="")
-
-
-print_board(board)
-
-solve(board)
-
-print("======================")
-
-print_board(board)

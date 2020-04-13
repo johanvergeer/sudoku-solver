@@ -3,12 +3,6 @@ from typing import List
 import pytest
 
 from soduku_solver.boards import SimpleBoard
-from soduku_solver.solver import SimpleSudokuSolver
-
-
-@pytest.fixture
-def simple_solver():
-    return SimpleSudokuSolver()
 
 
 @pytest.fixture
