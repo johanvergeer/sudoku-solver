@@ -59,3 +59,7 @@ def test_simple_board__unset(simple_board__4x4):
     simple_board__4x4.unset(position_to_unset)
 
     assert simple_board__4x4.get(position_to_unset) == 0
+
+
+def test_simple_board__size(simple_board__4x4):
+    assert simple_board__4x4.size == 4

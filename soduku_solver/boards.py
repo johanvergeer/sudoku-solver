@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 from dataclasses import dataclass
 from math import sqrt
 from typing import List
@@ -27,6 +27,15 @@ class Board(Protocol):
 
     @abstractmethod
     def get(self, position: Position) -> int:
+        ...
+
+    @abstractmethod
+    def get_next_unresolved(self) -> Position:
+        ...
+
+    @property
+    @abstractmethod
+    def size(self) -> int:
         ...
 
 
@@ -70,3 +79,7 @@ class SimpleBoard(Board):
                 position = Position(column, row)
                 if self.get(position) == 0:
                     return position
+
+    @property
+    def size(self) -> int:
+        return len(self._board)
