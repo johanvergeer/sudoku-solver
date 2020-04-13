@@ -1,4 +1,8 @@
-board = [
+from typing import List
+
+Board: List[List[int]]
+
+board: Board = [
     [6, 0, 5, 7, 2, 0, 0, 3, 9],
     [4, 0, 0, 0, 0, 5, 1, 0, 0],
     [0, 2, 0, 1, 0, 0, 0, 0, 4],
@@ -11,7 +15,7 @@ board = [
 ]
 
 
-def find_empty(bo):
+def find_empty(bo: Board):
     for i in range(len(bo)):
         for j in range(len(bo[0])):
             if bo[i][j] == 0:
@@ -20,7 +24,7 @@ def find_empty(bo):
     return None
 
 
-def valid(bo, num, pos):
+def valid(bo: Board, num, pos):
     # Check row
     for i in range(len(bo[0])):
         if bo[pos[0]][i] == num and pos[1] != i:
@@ -43,7 +47,7 @@ def valid(bo, num, pos):
     return True
 
 
-def solve(bo):
+def solve(bo: Board):
     find = find_empty(bo)
     if not find:
         return True
@@ -62,7 +66,7 @@ def solve(bo):
     return False
 
 
-def print_board(bo):
+def print_board(bo: Board):
     for i in range(len(bo)):
         if i % 3 == 0 and i != 0:
             print("- - - - - - - - - - -")
