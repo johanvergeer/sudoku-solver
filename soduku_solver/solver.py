@@ -16,11 +16,11 @@ board: Board = [
 ]
 
 
-def find_empty(bo: Board) -> Optional[Position]:
-    for i in range(len(bo)):
-        for j in range(len(bo[0])):
-            if bo[i][j] == 0:
-                return i, j  # row, col
+def find_next_empty(board: Board) -> Optional[Position]:
+    for row in range(len(board)):
+        for column in range(len(board[0])):
+            if board[row][column] == 0:
+                return row, column
 
     return None
 
@@ -49,7 +49,7 @@ def valid(bo: Board, num, pos):
 
 
 def solve(bo: Board):
-    find = find_empty(bo)
+    find = find_next_empty(bo)
     if not find:
         return True
     else:
