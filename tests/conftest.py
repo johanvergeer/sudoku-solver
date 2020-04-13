@@ -4,7 +4,7 @@ from soduku_solver.solver import Board
 
 
 @pytest.fixture
-def puzzle_4x4_1() -> Board:
+def board_4x4_1() -> Board:
     return [
         [3, 4, 1, 0],
         [0, 2, 0, 0],
@@ -14,7 +14,17 @@ def puzzle_4x4_1() -> Board:
 
 
 @pytest.fixture
-def puzzle_9x9_1() -> Board:
+def board_4x4_1_solved() -> Board:
+    return [
+        [3, 4, 1, 2],
+        [1, 2, 3, 4],
+        [4, 3, 2, 1],
+        [2, 1, 4, 3],
+    ]
+
+
+@pytest.fixture
+def board_9x9_1() -> Board:
     return [
         [6, 0, 5, 7, 2, 0, 0, 3, 9],
         [4, 0, 0, 0, 0, 5, 1, 0, 0],

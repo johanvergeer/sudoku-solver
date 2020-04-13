@@ -1,6 +1,7 @@
-from typing import List
+from typing import List, Tuple, Optional
 
-Board: List[List[int]]
+Board = List[List[int]]
+Position = Tuple[int, int]
 
 board: Board = [
     [6, 0, 5, 7, 2, 0, 0, 3, 9],
@@ -15,7 +16,7 @@ board: Board = [
 ]
 
 
-def find_empty(bo: Board):
+def find_empty(bo: Board) -> Optional[Position]:
     for i in range(len(bo)):
         for j in range(len(bo[0])):
             if bo[i][j] == 0:
