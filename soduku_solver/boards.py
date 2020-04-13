@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from dataclasses import dataclass
 from math import sqrt
-from typing import List, Optional, Set
+from typing import Iterable, Iterator, List, Optional, Set
 
 from typing_extensions import Protocol
 
@@ -44,7 +44,11 @@ class Board(Protocol):
         ...
 
 
-class SimpleBoard(Board):
+class SimpleBoard(Board, Iterable):
+    def __iter__(self) -> Iterator[Combination]:
+        for row in self._board:
+            yield row
+
     def __init__(self, board: List[List[int]]):
         self._board = board
 
